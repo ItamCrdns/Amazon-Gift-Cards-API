@@ -15,7 +15,6 @@ namespace Amazon_Gift_Cards_API.Repository
         private readonly IConfiguration _configuration;
         private readonly RestClient _client;
         private readonly string? _partnerId;
-        //private readonly string? _currencyCode;
         private readonly string? _accessKey;
         private readonly string? _secret;
         private readonly string? _region;
@@ -25,7 +24,6 @@ namespace Amazon_Gift_Cards_API.Repository
             _configuration = configuration;
             _client = new RestClient(_configuration.GetValue<string>("Amazon:AGCODUrl"));
             _partnerId = _configuration.GetValue<string>("Amazon:PartnerId");
-            //_currencyCode = _configuration.GetValue<string>("Amazon:CurrenyCode");
             _accessKey = _configuration.GetValue<string>("Amazon:AWSAccessKey");
             _secret = _configuration.GetValue<string>("Amazon:AWSSecret");
             _region = _configuration.GetValue<string>("Amazon:Region");
