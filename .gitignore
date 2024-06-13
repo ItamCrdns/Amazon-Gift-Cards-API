@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Amazon Gift Cards API/appsettings.json
+/Tests/appsettings.Development.json
+/Tests/appsettings.json
