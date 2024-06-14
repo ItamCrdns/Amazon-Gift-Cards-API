@@ -77,5 +77,97 @@ namespace Tests.Repository
             result.Exception.Message.Should().Be("The security token included in the request is invalid.");
             result.Exception.StatusCode.Should().Be(HttpStatusCode.Forbidden);
         }
+
+        [Fact]
+        public async void ActionStatusCheck_ReturnsSuccess()
+        {
+            // Arrange
+            var cardRepository = new CardRepository(_configuration);
+
+            // Act
+            var result = cardRepository.ActivationStatusCheck("statusCheckRequestId", "cardNumber");
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<AGCODResponse<ActivationStatusCheckResponse>>();
+            result.Data.Should().NotBeNull();
+            result.Data.Exception.Should().BeNull();
+            result.Exception.Should().BeNull();
+            result.Data.Status.Should().Be("SUCCESS");
+        }
+
+        [Fact]
+        public async void CancelGiftCard_ReturnsSuccess()
+        {
+            // Arrange
+            var cardRepository = new CardRepository(_configuration);
+
+            // Act
+            var result = cardRepository.CancelGiftCard("creationRequestId", "A23ZP02F085DFQ");
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<AGCODResponse<CancelGiftCardResponse>>();
+            result.Data.Should().NotBeNull();
+            result.Data.Exception.Should().BeNull();
+            result.Exception.Should().BeNull();
+            result.Data.Status.Should().Be("SUCCESS");
+        }
+
+        [Fact]
+        public async void CancelGiftCard_ReturnsFailure()
+        {
+            // Arrange
+            var cardRepository = new CardRepository(_configuration);
+
+            // Act
+            var result = cardRepository.CancelGiftCard("creationRequestId", "A23ZP02F085DFQ");
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<AGCODResponse<CancelGiftCardResponse>>();
+            result.Data.Should().BeNull();
+            result.Exception.Should().NotBeNull();
+            result.Exception.Message.Should().Be("The security token included in the request is invalid.");
+            result.Exception.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        }
+
+        [Fact]
+        public async void ActivateGiftCard_ReturnsSuccess()
+        {
+            // Arrange
+            var cardRepository = new CardRepository(_configuration);
+
+            // Act
+            var result = cardRepository.ActivateGiftCard("activationRequestId", "cardNumber", 10.00m, "GBP");
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<AGCODResponse<ActivateGiftCardResponse>>();
+            result.Data.Should().NotBeNull();
+            result.Data.Exception.Should().BeNull();
+            result.Exception.Should().BeNull();
+            result.Data.Status.Should().Be("SUCCESS");
+            result.Data.CardInfo.CardStatus.Should().Be("Activated");
+        }
+
+        [Fact]
+        public async void DeactivateGiftCard_ReturnsSuccess()
+        {
+            // Arrange
+            var cardRepository = new CardRepository(_configuration);
+
+            // Act
+            var result = cardRepository.DeactivateGiftCard("deactivationRequestId", "cardNumber");
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<AGCODResponse<DeactivateGiftCardResponse>>();
+            result.Data.Should().NotBeNull();
+            result.Data.Exception.Should().BeNull();
+            result.Exception.Should().BeNull();
+            result.Data.Status.Should().Be("SUCCESS");
+            result.Data.CardInfo.CardStatus.Should().Be("AwaitingActivation");
+        }
     }
 }

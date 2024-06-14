@@ -119,5 +119,41 @@ namespace Amazon_Gift_Cards_API.Repository
 
             return GetResponse<CreateGiftCardResponse>(request);
         }
+
+        public AGCODResponse<ActivationStatusCheckResponse> ActivationStatusCheck(string id, string cardNumber)
+        {
+            var request = CreateRequest("ActivationStatusCheck", new ActivationStatusCheckRequest
+            {
+                PartnerId = _partnerId,
+                StatusCheckRequestId = id,
+                CardNumber = cardNumber
+            });
+
+            return GetResponse<ActivationStatusCheckResponse>(request);
+        }
+
+        public AGCODResponse<CancelGiftCardResponse> CancelGiftCard(string id, string giftCodeId)
+        {
+            var request = CreateRequest("CancelGiftCard", new CancelGiftCardRequest
+            {
+                PartnerId = _partnerId,
+                CreationRequestId = id,
+                GcId = giftCodeId
+            });
+
+            return GetResponse<CancelGiftCardResponse>(request);
+        }
+
+        public AGCODResponse<DeactivateGiftCardResponse> DeactivateGiftCard(string id, string cardNumber)
+        {
+            var request = CreateRequest("DeactivateGiftCard", new DeactivateGiftCardRequest
+            {
+                PartnerId = _partnerId,
+                ActivationRequestId = id,
+                CardNumber = cardNumber
+            });
+
+            return GetResponse<DeactivateGiftCardResponse>(request);
+        }
     }
 }
